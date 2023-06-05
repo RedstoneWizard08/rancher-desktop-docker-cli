@@ -102,6 +102,12 @@ jobs:
       with:
         set: binary.platform=linux/amd64
         workdir: cli
+    
+    - name: Build linux arm64
+      uses: docker/bake-action@v2.2.0
+      with:
+        set: binary.platform=linux/arm64
+        workdir: cli
 
     - name: Build windows amd64
       uses: docker/bake-action@v2.2.0
@@ -128,10 +134,17 @@ jobs:
         if-no-files-found: error
 
     - uses: actions/upload-artifact@v2
-      name: Upload Linux artifact
+      name: Upload Linux amd64 artifact
       with:
         name: docker-linux-amd64
         path: cli/build/docker-linux-amd64
+        if-no-files-found: error
+    
+    - uses: actions/upload-artifact@v2
+      name: Upload Linux arm64 artifact
+      with:
+        name: docker-linux-arm64
+        path: cli/build/docker-linux-arm64
         if-no-files-found: error
 
     - uses: actions/upload-artifact@v2
